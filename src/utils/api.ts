@@ -1,5 +1,6 @@
 const OPEN_WEATHER_API_KEY = "9316576123986fb89716f7b6d3b7e499";
 
+export type OpenWeatherTempScale = "metric" | "imperial";
 export interface OpenWeatherData {
   coord: {
     lon: number;
@@ -42,9 +43,12 @@ export interface OpenWeatherData {
   cod: number;
 }
 
-export async function fetchOpenWeatherData(city: string): Promise<any> {
+export async function fetchOpenWeatherData(
+  city: string,
+  tempScale: OpenWeatherTempScale
+): Promise<any> {
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${OPEN_WEATHER_API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${tempScale}&appid=${OPEN_WEATHER_API_KEY}`
   );
 
   if (!res.ok) {

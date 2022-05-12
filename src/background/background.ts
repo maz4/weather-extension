@@ -1,2 +1,6 @@
-// TODO: background script
-chrome.runtime.onInstalled.addListener(() => {});
+import { setStoredCities, setStoredOptions } from "../utils/storage";
+
+chrome.runtime.onInstalled.addListener(() => {
+  setStoredCities([]);
+  setStoredOptions({ tempScale: "metric", homeCity: "Leeds" });
+});
