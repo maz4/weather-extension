@@ -1,5 +1,13 @@
 import React from "react";
-import { Card, CardContent, Button, Box, CardActions } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Button,
+  Box,
+  CardActions,
+  Typography,
+} from "@mui/material";
+import "../WeatherCard/WeatherCard.css";
 
 const WeatherCardContainer: React.FC<{
   children: React.ReactNode;
@@ -12,7 +20,7 @@ const WeatherCardContainer: React.FC<{
         {onDelete && (
           <CardActions>
             <Button onClick={onDelete} color="secondary">
-              Delete
+              <Typography className="weather-card-body">Delete</Typography>
             </Button>
           </CardActions>
         )}

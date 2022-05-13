@@ -2,5 +2,9 @@ import { setStoredCities, setStoredOptions } from "../utils/storage";
 
 chrome.runtime.onInstalled.addListener(() => {
   setStoredCities([]);
-  setStoredOptions({ tempScale: "metric", homeCity: "" });
+  setStoredOptions({
+    tempScale: "metric",
+    homeCity: "",
+    hasAutoOverlay: false,
+  });
 });

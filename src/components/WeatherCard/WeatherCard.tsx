@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./WeatherCard.css";
 import {
   fetchOpenWeatherData,
   OpenWeatherData,
@@ -29,7 +30,8 @@ const WeatherCard: React.FC<{
   if (cardState === "loading" || cardState === "error" || !weatherData) {
     return (
       <WeatherCardContainer>
-        <Typography variant="body1">
+        <Typography className="weather-card-title">{city}</Typography>
+        <Typography className="weather-card-body">
           {cardState === "loading"
             ? "Loading..."
             : "Error: Could not retrieve weather data for this city"}
@@ -40,11 +42,11 @@ const WeatherCard: React.FC<{
 
   return (
     <WeatherCardContainer onDelete={onDelete}>
-      <Typography variant="h5">{weatherData.name}</Typography>
-      <Typography variant="body1">
+      <Typography className="weather-card-title">{weatherData.name}</Typography>
+      <Typography className="weather-card-body">
         {Math.round(weatherData.main.temp)}
       </Typography>
-      <Typography variant="body1">
+      <Typography className="weather-card-body">
         Feels like: {Math.round(weatherData.main.feels_like)}
       </Typography>
     </WeatherCardContainer>

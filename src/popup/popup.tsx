@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import "./popup.css";
-import WeatherCard from "./WeatherCard";
 import "fontsource-roboto";
+import WeatherCard from "../components/WeatherCard";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, InputBase, IconButton, Paper, Grid } from "@mui/material";
+import PictureInPictureIcon from "@mui/icons-material/PictureInPicture";
+
 import {
   setStoredCities,
   getStoredCities,
@@ -12,6 +14,7 @@ import {
   getStoredOptions,
   LocalStorageOptions,
 } from "../utils/storage";
+import { Messages } from "../utils/messages";
 
 const celsius = "\u2103";
 const fahrenheit = "\u2109";
@@ -49,9 +52,22 @@ const App: React.FC<{}> = () => {
       ...options,
       tempScale: options.tempScale === "metric" ? "imperial" : "metric",
     };
-    setStoredOptions(options).then(() => {
+    setStoredOptions(updateOptions).then(() => {
       setOptions(updateOptions);
     });
+  };
+
+  const handelOverlayButtonClick = () => {
+    chrome.tabs.query(
+      {
+        active: true,
+      },
+      (tabs) => {
+        if (tabs.length > 0) {
+          chrome.tabs.sendMessage(tabs[0].id, Messages.TOGGLE_OVERLAY);
+        }
+      }
+    );
   };
 
   if (!options) {
@@ -84,7 +100,17 @@ const App: React.FC<{}> = () => {
             </Paper>
           </Box>
         </Grid>
+        <Grid item>
+          <Box>
+            <Paper>
+              <IconButton onClick={handelOverlayButtonClick}>
+                <PictureInPictureIcon />
+              </IconButton>
+            </Paper>
+          </Box>
+        </Grid>
       </Grid>
+
       {options.homeCity !== "" && (
         <WeatherCard city={options.homeCity} tempScale={options.tempScale} />
       )}
