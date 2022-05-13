@@ -1,1 +1,1 @@
-# chrome-extension-react-ts-boilerplate
+# Chrome Weather Extension

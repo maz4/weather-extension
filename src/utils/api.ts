@@ -1,4 +1,5 @@
-const OPEN_WEATHER_API_KEY = "9316576123986fb89716f7b6d3b7e499";
+// OpenWeatherApi key
+const OPEN_WEATHER_API_KEY = "";
 
 export type OpenWeatherTempScale = "metric" | "imperial";
 export interface OpenWeatherData {
@@ -57,4 +58,8 @@ export async function fetchOpenWeatherData(
 
   const data = res.json();
   return data;
+}
+
+export function getWeatherIconSrc(iconCode: string) {
+  return `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
 }

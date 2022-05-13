@@ -4,8 +4,9 @@ import {
   fetchOpenWeatherData,
   OpenWeatherData,
   OpenWeatherTempScale,
+  getWeatherIconSrc,
 } from "../../utils/api";
-import { Typography } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import WeatherCardContainer from "../WeatherCardContainer";
 
 type WeatherCardState = "loading" | "error" | "ready";
@@ -29,7 +30,7 @@ const WeatherCard: React.FC<{
 
   if (cardState === "loading" || cardState === "error" || !weatherData) {
     return (
-      <WeatherCardContainer>
+      <WeatherCardContainer onDelete={onDelete}>
         <Typography className="weather-card-title">{city}</Typography>
         <Typography className="weather-card-body">
           {cardState === "loading"
@@ -42,13 +43,32 @@ const WeatherCard: React.FC<{
 
   return (
     <WeatherCardContainer onDelete={onDelete}>
-      <Typography className="weather-card-title">{weatherData.name}</Typography>
-      <Typography className="weather-card-body">
-        {Math.round(weatherData.main.temp)}
-      </Typography>
-      <Typography className="weather-card-body">
-        Feels like: {Math.round(weatherData.main.feels_like)}
-      </Typography>
+      <Grid container justifyContent={"space-around"}>
+        <Grid item>
+          <Typography className="weather-card-title">
+            {weatherData.name}
+          </Typography>
+          <Typography className="weather-card-temp">
+            {Math.round(weatherData.main.temp)}
+          </Typography>
+          <Typography className="weather-card-body">
+            Feels like: {Math.round(weatherData.main.feels_like)}
+          </Typography>
+        </Grid>
+        <Grid item>
+          {weatherData.weather.length > 0 && (
+            <>
+              <img
+                src={getWeatherIconSrc(weatherData.weather[0].icon)}
+                alt=""
+              />
+              <Typography className="weather-card-body">
+                {weatherData.weather[0].main}
+              </Typography>
+            </>
+          )}
+        </Grid>
+      </Grid>
     </WeatherCardContainer>
   );
 };

@@ -15,9 +15,7 @@ import {
   LocalStorageOptions,
 } from "../utils/storage";
 import { Messages } from "../utils/messages";
-
-const celsius = "\u2103";
-const fahrenheit = "\u2109";
+import { consts } from "../constance/constance";
 
 const App: React.FC<{}> = () => {
   const [cities, setCities] = useState<string[]>([]);
@@ -45,6 +43,7 @@ const App: React.FC<{}> = () => {
     const citiesCopy = [...cities];
     citiesCopy.splice(index, 1);
     setCities([...citiesCopy]);
+    setStoredCities([...citiesCopy]);
   };
 
   const handelTempScaleButtonClick = () => {
@@ -95,7 +94,9 @@ const App: React.FC<{}> = () => {
           <Box>
             <Paper>
               <IconButton onClick={handelTempScaleButtonClick}>
-                {options.tempScale === "metric" ? celsius : fahrenheit}
+                {options.tempScale === "metric"
+                  ? consts.CELSIUS
+                  : consts.FAHRENHEIT}
               </IconButton>
             </Paper>
           </Box>
